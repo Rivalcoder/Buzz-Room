@@ -38,7 +38,7 @@ function Chatapp() {
 
     // Initialize socket and handle events
     useEffect(() => {
-        socket = io(process.env.REACT_APP_SERVER_URL || 'http://localhost:5000');
+        socket = io(process.env.REACT_APP_SERVER_URL || 'https://messenger-server-9zrr.onrender.com');
 
         socket.emit('joinRoom', { username, room });
 

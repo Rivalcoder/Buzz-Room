@@ -18,7 +18,7 @@ function Page() {
 
     const navigate = useNavigate();
     const random = Math.floor(Math.random() * 9);
-    const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://messenger-server-9zrr.onrender.com';
 
     // Check server status on mount
     useEffect(() => {
