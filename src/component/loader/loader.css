@@ -1,35 +1,109 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Outfit:wght@100..900&display=swap');
-
-
-
-.load-body{
-   background-color: black;
-    height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction:column;
-    gap:60px;
-} 
-
-.load-body h1{
-    font-family:"Josefin Sans", serif; 
-    color: aliceblue;
+/* Loader.css */
+.load-body {
+  height: 100vh;
+  width: 100%;
+  background-color: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f8fafc;
+  font-family: 'Inter', sans-serif;
 }
 
-.loader {
-    height:27px;
-    width: 280px;
-    --c:no-repeat linear-gradient(#ffffff 0 0);
-    background: var(--c), var(--c), var(--c), var(--c);
-    background-size: 26% 3px;
-    animation: l6 1s infinite;
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* 3D Cube Loader */
+.cube-loader {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotate 2s infinite linear;
+}
+
+.cube-face {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(99, 102, 241, 0.2);
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.cube-face-front {
+  transform: rotateY(0deg) translateZ(30px);
+}
+
+.cube-face-back {
+  transform: rotateY(180deg) translateZ(30px);
+}
+
+.cube-face-right {
+  transform: rotateY(90deg) translateZ(30px);
+}
+
+.cube-face-left {
+  transform: rotateY(-90deg) translateZ(30px);
+}
+
+.cube-face-top {
+  transform: rotateX(90deg) translateZ(30px);
+}
+
+.cube-face-bottom {
+  transform: rotateX(-90deg) translateZ(30px);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
   }
-  @keyframes l6 {
-    0%,
-    70%,
-    100%  {background-position: calc(0*100%/3) 50%,calc(1*100%/3) 50% ,calc(2*100%/3) 50%,calc(3*100%/3) 50% }
-    23.33%{background-position: calc(0*100%/3) 0  ,calc(1*100%/3) 100%,calc(2*100%/3) 0  ,calc(3*100%/3) 100%}
-    46.67%{background-position: calc(1*100%/3) 0  ,calc(0*100%/3) 100%,calc(3*100%/3) 0  ,calc(2*100%/3) 100%}
-    69.99%{background-position: calc(1*100%/3) 50%,calc(0*100%/3) 50% ,calc(3*100%/3) 50%,calc(2*100%/3) 50% }
+
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
   }
+}
+
+.loading-text {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.progress-container {
+  width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+  transition: width 0.1s linear;
+}
+
+.connection-details {
+  font-size: 14px;
+  color: #94a3b8;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
