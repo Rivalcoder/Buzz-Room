@@ -26,6 +26,7 @@ function Chatapp() {
     const [users, setUsers] = useState([]);
     const [qrShow, setQr] = useState(false);
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -107,17 +108,21 @@ function Chatapp() {
         }
     };
 
+
+
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            if (file.size > 1024 * 1024) { // 1MB limit
-                alert("Image is too large. Max size is 1MB.");
+            if (file.size > 1024 * 1024 * 5) { // 5MB limit (Server is 10MB)
+                alert("Image is too large. Max size is 5MB.");
                 return;
             }
+            setIsUploading(true); // Start loading
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result;
                 socket.emit('sendMessage', { text: '', image: base64String });
+                setIsUploading(false); // Stop loading after emit
             };
             reader.readAsDataURL(file);
         }
@@ -273,14 +278,20 @@ function Chatapp() {
 
                 {/* Message Input Form */}
                 <form className="form-container" onSubmit={sendMessage}>
+                    {isUploading && (
+                        <div className="upload-status">
+                            <div className="spinner-small"></div> Sending Image...
+                        </div>
+                    )}
                     <input
                         type="file"
                         ref={fileInputRef}
                         style={{ display: 'none' }}
                         accept="image/*"
                         onChange={handleImageUpload}
+                        disabled={isUploading}
                     />
-                    <button type="button" className="icon-btn" onClick={triggerFileInput} title="Send Image">
+                    <button type="button" className="icon-btn" onClick={triggerFileInput} title="Send Image" disabled={isUploading}>
                         <ImageIcon size={20} />
                     </button>
                     <input
@@ -288,8 +299,9 @@ function Chatapp() {
                         onChange={(e) => setMessage(e.target.value)}
                         onKeyPress={handleKeyPress}
                         placeholder="Type a message..."
+                        disabled={isUploading}
                     />
-                    <button type="submit">
+                    <button type="submit" disabled={isUploading}>
                         <Send size={18} />
                         Send
                     </button>

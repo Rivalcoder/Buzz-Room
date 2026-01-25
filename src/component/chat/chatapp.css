@@ -351,6 +351,54 @@ body {
   cursor: pointer;
 }
 
+.upload-status {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 41, 59, 0.9);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease;
+}
+
+.spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 /* Mobile */
 .toggle-btn {
   display: none;
@@ -361,10 +409,17 @@ body {
 }
 
 @media (max-width: 768px) {
+  .chat-body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
   .navbar {
     position: fixed;
     height: 100%;
     transform: translateX(-100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 60;
   }
 
   .navbar.sidebar-visible {
@@ -383,14 +438,57 @@ body {
 
   .chat-header {
     padding: 0 16px;
+    height: 60px;
+    flex-shrink: 0;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .heading {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
   }
 
   .messages-container {
     padding: 16px;
+    padding-bottom: 90px;
+    flex: 1;
+    overflow-y: auto;
   }
 
   .form-container {
-    padding: 16px;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 50;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .form-container input {
+    height: 44px;
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  .form-container button {
+    height: 44px;
+    padding: 0 16px;
+  }
+
+  .upload-status {
+    top: -40px;
+    width: max-content;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .sidebar-overlay {
@@ -401,7 +499,7 @@ body {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
+    z-index: 55;
   }
 
   .sidebar-overlay.active {
