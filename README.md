@@ -1,5 +1,6 @@
 # 📧 Messenger App
 
+
 This is a real-time chat application built with React, Socket.io, and QR code functionality.
 
 ## ✨ Features
